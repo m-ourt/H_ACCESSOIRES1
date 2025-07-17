@@ -11,14 +11,21 @@ import TextInput from '@/Components/TextInput.vue';
 
 const props = defineProps({
     user: Object,
+    mustVerifyEmail: Boolean,
+    status: String,
 });
 
 const form = useForm({
     _method: 'PUT',
     name: props.user.name,
     email: props.user.email,
+    phone: props.user.phone || '',
+    address: props.user.address || '',
+    ville: props.user.ville || '',
+    code_postal: props.user.code_postal || '',
     photo: null,
 });
+
 
 const verificationLinkSent = ref(null);
 const photoPreview = ref(null);
@@ -29,7 +36,7 @@ const updateProfileInformation = () => {
         form.photo = photoInput.value.files[0];
     }
 
-    form.post(route('user-profile-information.update'), {
+    form.post(route('profile.update'), {
         errorBag: 'updateProfileInformation',
         preserveScroll: true,
         onSuccess: () => clearPhotoFileInput(),
@@ -78,11 +85,11 @@ const clearPhotoFileInput = () => {
 <template>
     <FormSection @submitted="updateProfileInformation">
         <template #title>
-            Profile Information
+            Informations de profil
         </template>
 
         <template #description>
-            Update your account's profile information and email address.
+            Mettez à jour les informations de profil et l'adresse e-mail de votre compte.
         </template>
 
         <template #form>
@@ -112,7 +119,7 @@ const clearPhotoFileInput = () => {
                 </div>
 
                 <SecondaryButton class="mt-2 mr-2" type="button" @click.prevent="selectNewPhoto">
-                    Select A New Photo
+                   Sélectionner une nouvelle photo
                 </SecondaryButton>
 
                 <SecondaryButton
@@ -121,7 +128,7 @@ const clearPhotoFileInput = () => {
                     class="mt-2"
                     @click.prevent="deletePhoto"
                 >
-                    Remove Photo
+                    Supprimer la photo
                 </SecondaryButton>
 
                 <InputError :message="form.errors.photo" class="mt-2" />
@@ -154,8 +161,7 @@ const clearPhotoFileInput = () => {
 
                 <div v-if="$page.props.jetstream.hasEmailVerification && user.email_verified_at === null">
                     <p class="text-sm mt-2 dark:text-white">
-                        Your email address is unverified.
-
+                        Votre adresse e-mail n'est pas vérifiée.
                         <Link
                             :href="route('verification.send')"
                             method="post"
@@ -163,24 +169,72 @@ const clearPhotoFileInput = () => {
                             class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
                             @click.prevent="sendEmailVerification"
                         >
-                            Click here to re-send the verification email.
+                           Cliquez ici pour renvoyer l'e-mail de vérification.
                         </Link>
                     </p>
 
                     <div v-show="verificationLinkSent" class="mt-2 font-medium text-sm text-green-600 dark:text-green-400">
-                        A new verification link has been sent to your email address.
-                    </div>
+Un nouveau lien de vérification a été envoyé à votre adresse email.                    </div>
                 </div>
             </div>
+            <!-- Phone -->
+             <div class="col=span=6 sm:col-span-4">
+                <InputLabel for="phone" value ="Téléphone" />
+                <TextInput
+                    id="phone"
+                    v-model="form.phone "
+                    type="tel"
+                    class="mt-1 block w-full"
+                    autocomplete="tel"
+                />
+                <InputError :message="form.errors.phone" class="mt-2" />
+            </div>
+            <div class="col-span-6 sm:col-span-4">
+            <InputLabel for="address" value="Adresse" />
+            <TextInput
+                id="address"
+                v-model="form.address"
+                type="text"
+                class="mt-1 block w-full"
+                autocomplete="street-address"
+            />
+            <InputError :message="form.errors.address" class="mt-2" />
+        </div>
+        <!-- Ville -->
+        <div class="col-span-6 sm:col-span-2">
+            <InputLabel for="ville" value="Ville" />
+            <TextInput
+                id="ville"
+                v-model="form.ville"
+                type="text"
+                class="mt-1 block w-full"
+                autocomplete="address-level2"
+            />
+            <InputError :message="form.errors.ville" class="mt-2" />
+
+        </div>
+        <!-- Code Postal -->
+        <div class="col-span-6 sm:col-span-2">
+            <InputLabel for="code_postal" value="Code Postal" />
+            <TextInput
+                id="code_postal"
+                v-model="form.code_postal"
+                type="text"
+                class="mt-1 block w-full"
+                autocomplete="code-postal"
+            />
+            <InputError :message="form.errors.code_postal" class="mt-2" />
+
+        </div>
         </template>
 
         <template #actions>
             <ActionMessage :on="form.recentlySuccessful" class="mr-3">
-                Saved.
+                Enregistré.
             </ActionMessage>
 
             <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                Save
+                Enregistrer
             </PrimaryButton>
         </template>
     </FormSection>

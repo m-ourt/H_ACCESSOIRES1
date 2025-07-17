@@ -9,7 +9,12 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 
 const form = useForm({
-    name: '',
+    nom: '',
+    prenom: '',
+    telephone: '',
+    adress: '',
+    ville: '',
+    code_postale: '',
     email: '',
     password: '',
     password_confirmation: '',
@@ -23,31 +28,94 @@ const submit = () => {
 };
 </script>
 
-<template>
+<template b>
     <Head title="Register" />
 
     <AuthenticationCard>
-        <template #logo>
+        <template #logo >
             <AuthenticationCardLogo />
         </template>
 
         <form @submit.prevent="submit">
             <div>
-                <InputLabel for="name" value="Name" />
+                <InputLabel for="nom" value="Nom *"  />
                 <TextInput
-                    id="name"
-                    v-model="form.name"
+                    id="nom"
+                    v-model="form.nom"
                     type="text"
                     class="mt-1 block w-full"
                     required
                     autofocus
-                    autocomplete="name"
+                    autocomplete="nom"
                 />
-                <InputError class="mt-2" :message="form.errors.name" />
+                <InputError class="mt-2" :message="form.errors.nom" />
+            </div>
+
+             <div class="mt-4">
+                <InputLabel for="prenom" value="Prénom *" />
+                <TextInput
+                    id="prenom"
+                    v-model="form.prenom"
+                    type="text"
+                    class="mt-1 block w-full"
+                    required
+                    autocomplete="prenom"
+                />
+                <InputError class="mt-2" :message="form.errors.prenom" />
             </div>
 
             <div class="mt-4">
-                <InputLabel for="email" value="Email" />
+                <InputLabel for="telephone" value="Téléphone *" />
+                <TextInput
+                    id="telephone"
+                    v-model="form.telephone"
+                    type="text"
+                    class="mt-1 block w-full"
+                    required
+                    autocomplete="telephone"
+                />
+                <InputError class="mt-2" :message="form.errors.telephone" />
+            </div>
+
+            <div class="mt-4">
+                <InputLabel for="adress" value="Adress *" />
+                <TextInput
+                    id="adress"
+                    v-model="form.adress"
+                    type="text"
+                    class="mt-1 block w-full"
+                    required
+                    autocomplete="adress"
+                />
+                <InputError class="mt-2" :message="form.errors.adress" />
+            </div>
+
+            <div class="mt-4">
+                <InputLabel for="ville" value="Ville *" />
+                <TextInput
+                    id="ville"
+                    v-model="form.ville"
+                    type="text"
+                    class="mt-1 block w-full"
+                    required
+                    autocomplete="ville"
+                />
+                <InputError class="mt-2" :message="form.errors.ville" />
+            </div>
+            <div class="mt-4">
+                <InputLabel for="code_postale" value="Code Postale *" />
+                <TextInput
+                    id="code_postale"
+                    v-model="form.code_postale"
+                    type="text"
+                    class="mt-1 block w-full"
+                    required
+                    autocomplete="code_postale"
+                />
+                <InputError class="mt-2" :message="form.errors.code_postale" />
+            </div>
+            <div class="mt-4">
+                <InputLabel for="email" value="Email *" />
                 <TextInput
                     id="email"
                     v-model="form.email"
@@ -60,7 +128,7 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password" value="Password" />
+                <InputLabel for="password" value="Password *" />
                 <TextInput
                     id="password"
                     v-model="form.password"
@@ -73,7 +141,7 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password_confirmation" value="Confirm Password" />
+                <InputLabel for="password_confirmation" value="Confirm Password *" />
                 <TextInput
                     id="password_confirmation"
                     v-model="form.password_confirmation"

@@ -20,23 +20,27 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.transform(data => ({
+    
+    form.transform(data => {
+        console.log(data)
+        return {
         ...data,
         remember: form.remember ? 'on' : '',
-    })).post(route('login'), {
+    }
+}).post(route('login'), {
         onFinish: () => form.reset('password'),
     });
 };
 </script>
 
-<template>
+<template >
     <Head title="Log in" />
 
     <AuthenticationCard>
         <template #logo>
             <AuthenticationCardLogo />
         </template>
-
+        
         <div v-if="status" class="mb-4 font-medium text-sm text-green-600 dark:text-green-400">
             {{ status }}
         </div>
@@ -48,7 +52,8 @@ const submit = () => {
                     id="email"
                     v-model="form.email"
                     type="email"
-                    class="mt-1 block w-full"
+                    class="mt-1 block w-full bg-field-color text-black border-none rounded-md focus:ring-white"
+
                     required
                     autofocus
                     autocomplete="username"
@@ -62,7 +67,7 @@ const submit = () => {
                     id="password"
                     v-model="form.password"
                     type="password"
-                    class="mt-1 block w-full"
+                    class="mt-1 block w-full bg-field-color text-black border-none rounded-md focus:ring-white"
                     required
                     autocomplete="current-password"
                 />
@@ -72,12 +77,12 @@ const submit = () => {
             <div class="block mt-4">
                 <label class="flex items-center">
                     <Checkbox v-model:checked="form.remember" name="remember" />
-                    <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">Remember me</span>
+                    <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">Rappel moi</span>
                 </label>
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                <Link v-if="canResetPassword" :href="route('password.request')" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
+                <Link v-if="canResetPassword" :href="route('password.request')" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset--800">
                     Forgot your password?
                 </Link>
 
@@ -85,6 +90,13 @@ const submit = () => {
                     Log in
                 </PrimaryButton>
             </div>
+
+            <div class="flex items-center justify-end mt-4">
+                <Link :href="route('register')" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
+                    creer votre compte?
+                </Link>
+            </div>
+
         </form>
     </AuthenticationCard>
 </template>
