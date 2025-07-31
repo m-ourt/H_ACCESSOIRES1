@@ -27,7 +27,8 @@ const submit = () => {
         ...data,
         remember: form.remember ? 'on' : '',
     }
-}).post(route('login'), {
+})
+.post(route('login'), {
         onFinish: () => form.reset('password'),
     });
 };

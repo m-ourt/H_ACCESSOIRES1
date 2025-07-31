@@ -13,11 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-                    $table->string('code_postal', 10)->after('ville')->nullable()
-                          ->comment('Code postal de l’utilisateur');
-
-        });
+        if (!Schema::hasColumn('users', 'code_postal')) {
+            Schema::table('users', function (Blueprint $table) {
+                $table->string('code_postal', 10)->after('ville')->nullable()
+                      ->comment('Code postal de l\'utilisateur');
+            });
+        }
     }
 
     /**

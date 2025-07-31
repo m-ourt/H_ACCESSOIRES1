@@ -10,9 +10,11 @@ use Inertia\Inertia;
 
 class CartController extends Controller
 {
+   
     //Affiche  panier de l'utilisateur connecté
     public function index()
     {
+        
         $cartItems = CartItem::with('product')
             ->where('user_id', Auth::id())
             ->get();
@@ -27,30 +29,36 @@ class CartController extends Controller
     {
         $request->validate([
             'product_id' => 'required|exists:products,id',
-            'quantity' => 'nullable|integer|min:1',
+            'quantity' => 'required|integer|min:1',
         ]);
 
-        $userId = Auth::id();
+        $product = Product::find($request->product_id);
 
-        // Vérifier si produit dans  panier
+        if (!$product) {
+            return back()->withErrors(['error' => 'Produit introuvable dans la base.']);
+        }
+     
+        $userId = Auth::id();
+        
+        // Vérifier si produit dans le panier
         $existing = CartItem::where('user_id', $userId)
             ->where('product_id', $request->product_id)
             ->first();
 
         if ($existing) {
-            // Incrémenter 
-            $existing->quantity += $request->quantity ?? 1;
+            // Incrémenter la quantité
+            $existing->quantity += $request->quantity;
             $existing->save();
         } else {
-            // nouvel article dans le panier
+            // Nouvel article dans le panier
             CartItem::create([
                 'user_id' => $userId,
                 'product_id' => $request->product_id,
-                'quantity' => $request->quantity ?? 1,
+                'quantity' => $request->quantity,
             ]);
         }
 
-        return redirect()->route('panier')->with('success', 'Produit ajouté au panier');
+        return back()->with('success', 'Produit ajouté au panier');
     }
 
     //Supprimer  produit panier

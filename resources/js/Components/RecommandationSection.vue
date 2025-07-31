@@ -31,22 +31,22 @@ import { Link } from '@inertiajs/vue3';
 const recommended = [
   {
     title: "Top accessoire homme achetés",
-    image: "/img/PRD (6).jpg",
-    link: "/categorie/homme", // remplace plus tard avec ta vraie route
+    image: "/img/PRD6.jpg",
+    link: "/categorie/homme", // remplace apres
   },
   {
     title: "Top accessoires femme achetés",
-    image: "/img/PRD (3).jpg",
+    image: "/img/PRD3.jpg",
     link: "/categorie/femme",
   },
   {
     title: "Top accessoires enfant achetés",
-    image: "/img/PRD (7).jpg",
+    image: "/img/PRD7.jpg",
     link: "/categorie/enfant",
   },
   {
     title: "Top accessoires luxe achetés",
-    image: "/img/PRD (9).jpg",
+    image: "/img/PRD9.jpg",
     link: "/categorie/luxe",
   },
 ];

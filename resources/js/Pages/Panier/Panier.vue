@@ -1,11 +1,13 @@
 <script setup>
 import Navbar from '@/Components/Navbarre.vue'
 import Footer from '@/Components/Footer.vue'
+import ProductCard from '../../Components/ProductCard.vue'
 import { router } from '@inertiajs/vue3'
 
 const props = defineProps({
   cartItems: Array,
 })
+console.log(props.cartItems)
 
 function supprimerProduit(id) {
   router.delete(`/cart/delete/${id}`, {
@@ -41,7 +43,7 @@ function changerQuantite(item, type) {
     <main class="flex-1 px-6 py-10">
       <h1 class="text-3xl font-bold text-[#4C6444] mb-6">Mon Panier</h1>
 
-     
+     <!--<ProductCard :product="unProduit" />-->
       <div v-if="cartItems.length" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         <div
           v-for="item in cartItems"

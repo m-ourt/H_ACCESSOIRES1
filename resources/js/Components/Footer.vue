@@ -1,138 +1,145 @@
 <template>
-<footer class="bg-[#CABA9C] text-white text-center py-6 mt-10 text-sm ">
-  <div class="flex items-left justify-between max-w-4xl mx-auto px-4"> 
-        <button @click="$inertia.get('/NavBarre')">
-          <svg xmlns="http://www.w3.org/2000/svg" width="55" height="55" viewBox="0 0 200 200" version="1.1">
+  <footer
+    class="relative bg-[#CABA9C] text-[#4D2D18] overflow-hidden shadow-inner"
+    @mouseenter="expandFooter"
+    @mouseleave="collapseFooter"
+    :class="{ 'footer-expanded': isExpanded, 'footer-collapsed': !isExpanded }"
+  >
+    <div class="max-w-7xl mx-auto px-6 md:px-10 transition-all duration-500 transform">
+      <!-- Top: Logo + Réseaux -->
+      <div class="flex flex-col md:flex-row justify-between items-start space-y-6 md:space-y-0 mb-6">
+        <div class="space-y-4">
+                <a href="#top" class="flex items-center mb-4 md:mb-0 hover:opacity-80 transition">
+          <h2 class="text-2xl font-bold flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="55" height="55" viewBox="0 0 200 200" version="1.1">
 	            <path d="M 90 34.750 C 90 35.162, 95.569 40.900, 102.376 47.500 C 112.350 57.171, 115.366 60.770, 117.913 66.045 C 122.357 75.249, 123.974 82.170, 123.988 92.040 C 124.011 108.443, 119 120.316, 107.124 132.001 C 102.931 136.126, 97.362 140.625, 94.750 141.999 C 92.137 143.373, 90 144.835, 90 145.248 C 90 145.662, 100.125 146, 112.500 146 C 129.823 146, 135.004 145.712, 135.020 144.750 C 135.084 140.644, 138.125 121.730, 139.377 117.648 C 140.856 112.827, 140.847 112.772, 137.907 108.712 C 130.007 97.807, 130.505 82.417, 139.101 71.833 L 141.267 69.165 139.157 60.833 C 137.997 56.250, 136.788 49.800, 136.471 46.500 C 136.154 43.200, 135.673 39.038, 135.402 37.250 L 134.909 34 112.455 34 C 100.105 34, 90 34.337, 90 34.750 M 152.667 38.667 C 152.300 39.033, 152 40.383, 152 41.667 C 152 43.963, 152.167 44, 162.500 44 L 173 44 173 41 L 173 38 163.167 38 C 157.758 38, 153.033 38.300, 152.667 38.667 M 6.358 43.309 C 7.380 43.964, 9.293 45.320, 10.608 46.323 L 13 48.145 13 90.381 C 13 135.949, 13.183 134.384, 7.500 137.353 C 4.682 138.825, 5.683 138.921, 24 138.930 C 38.782 138.937, 43.016 138.672, 41.500 137.833 C 40.400 137.225, 38.487 135.810, 37.250 134.689 C 35.073 132.717, 35 132.060, 35 114.309 L 35 95.966 60.750 96.233 L 86.500 96.500 87.191 113.500 C 87.571 122.850, 88.182 132.525, 88.549 135 L 89.215 139.500 95.643 132.598 C 113.553 113.367, 116.907 83.287, 103.663 60.688 C 100.416 55.147, 90.044 44.551, 88.953 45.660 C 88.498 46.122, 87.760 54.825, 87.313 65 L 86.500 83.500 60.750 83.767 L 35 84.034 35 66.089 C 35 46.339, 34.560 47.848, 41.642 43.309 C 43.115 42.364, 39.460 42.118, 24 42.118 C 8.540 42.118, 4.885 42.364, 6.358 43.309 M 152 47.500 C 152 48.844, 153.534 49.027, 162.750 48.784 C 169.061 48.617, 173.500 48.087, 173.500 47.500 C 173.500 46.913, 169.061 46.383, 162.750 46.216 C 153.534 45.973, 152 46.156, 152 47.500 M 151.362 52.500 C 151.045 53.325, 151.051 54.690, 151.375 55.534 C 151.863 56.807, 153.798 57.020, 162.732 56.784 L 173.500 56.500 173.816 53.750 L 174.133 51 163.035 51 C 154.093 51, 151.825 51.291, 151.362 52.500 M 156.500 61.976 C 151.454 63.273, 148 64.898, 148 65.975 C 148 66.539, 148.563 66.993, 149.250 66.985 C 150.822 66.965, 153.857 65.061, 152.500 64.945 C 151.950 64.898, 152.400 64.473, 153.500 64 C 156.448 62.733, 168 62.787, 168 64.067 C 168 64.655, 168.840 64.868, 169.868 64.542 C 170.895 64.216, 173.033 64.413, 174.618 64.980 C 177.234 65.916, 177.328 65.878, 175.640 64.565 C 173.638 63.008, 165.294 60.935, 161.701 61.102 C 160.490 61.159, 158.150 61.552, 156.500 61.976 M 153.923 66.538 C 151.406 67.320, 148.517 68.876, 147.504 69.996 C 145.712 71.976, 145.714 72.071, 147.579 73.434 C 148.634 74.205, 149.163 75.171, 148.755 75.579 C 148.346 75.987, 147.138 75.530, 146.069 74.563 C 145 73.595, 143.653 73.096, 143.075 73.454 C 141.191 74.618, 137.166 82.409, 136.463 86.250 L 135.777 90 139.948 90 C 142.473 90, 143.874 90.394, 143.500 91 C 143.160 91.550, 141.275 92, 139.310 92 C 135.797 92, 135.747 92.056, 136.298 95.449 C 136.940 99.404, 139.186 104.383, 141.956 107.987 L 143.866 110.474 146.429 108.067 C 149.694 104.999, 151.103 106.197, 148.051 109.446 L 145.761 111.884 149.130 113.954 C 153.114 116.402, 159.641 118.340, 161.023 117.486 C 161.560 117.154, 162 115.559, 162 113.941 C 162 112.323, 162.484 111, 163.075 111 C 163.687 111, 164.014 112.402, 163.834 114.250 C 163.526 117.423, 163.606 117.495, 167.235 117.283 C 171.075 117.058, 179 113.590, 179 112.135 C 179 111.681, 178.111 110.505, 177.024 109.521 C 175.937 108.538, 175.309 107.309, 175.629 106.791 C 175.949 106.273, 177.284 106.857, 178.595 108.089 C 180.868 110.225, 181.068 110.248, 182.897 108.593 C 185.580 106.165, 189.180 97.386, 188.809 94.177 C 188.536 91.809, 188.125 91.536, 185.250 91.814 C 183.423 91.990, 182 91.662, 182 91.064 C 182 90.479, 183.575 90, 185.500 90 C 188.239 90, 189 89.598, 189 88.149 C 189 85.072, 186.869 79.696, 184.255 76.176 L 181.786 72.853 179.397 75.097 C 176.285 78.021, 174.979 76.716, 177.902 73.604 L 180.146 71.216 177.823 69.574 C 176.545 68.671, 173.081 67.224, 170.125 66.359 C 165.840 65.105, 164.592 65.042, 163.968 66.052 C 163.537 66.749, 163.408 67.900, 163.681 68.611 C 163.954 69.322, 163.803 70.488, 163.345 71.202 C 162.785 72.075, 162.347 71.357, 162.006 69.011 C 161.414 64.931, 160.247 64.574, 153.923 66.538 M 146 66.500 C 146 66.775, 146.225 67, 146.500 67 C 146.775 67, 147 66.775, 147 66.500 C 147 66.225, 146.775 66, 146.500 66 C 146.225 66, 146 66.225, 146 66.500 M 174.197 82.135 C 168.966 85.184, 167.877 86.809, 171.925 85.524 C 173.066 85.162, 174 84.446, 174 83.933 C 174 83.420, 174.492 83, 175.092 83 C 175.693 83, 177.329 82.100, 178.727 81 C 182.479 78.049, 180.248 78.608, 174.197 82.135 M 153.500 83.922 C 156.117 86.924, 161 90.385, 161 89.238 C 161 88.743, 158.863 86.829, 156.250 84.983 C 152.800 82.546, 152.047 82.256, 153.500 83.922 M 192 91 C 192 93, 192.500 94, 193.500 94 C 194.500 94, 195 93, 195 91 C 195 89, 194.500 88, 193.500 88 C 192.500 88, 192 89, 192 91 M 151.500 124 C 150.060 126.330, 152.642 127, 163.059 127 C 173.333 127, 174 126.878, 174 125 C 174 123.122, 173.333 123, 163.059 123 C 156.844 123, 151.851 123.432, 151.500 124 M 152.184 130.715 C 152.488 132.293, 153.744 132.500, 163.014 132.500 C 171.668 132.500, 173.500 132.238, 173.500 131 C 173.500 129.777, 171.503 129.448, 162.670 129.215 C 152.730 128.954, 151.868 129.077, 152.184 130.715 M 152.500 136 C 151.088 138.284, 153.606 139, 163.059 139 C 172.333 139, 173 138.866, 173 137 C 173 135.134, 172.333 135, 163.059 135 C 157.510 135, 152.845 135.442, 152.500 136 M 153 142.500 C 153 143.842, 154.429 144.030, 162.750 143.786 C 175.360 143.416, 175.187 141.596, 162.505 141.214 C 154.407 140.970, 153 141.160, 153 142.500 M 11 157.941 C 11 162.647, 11.416 166, 12 166 C 12.550 166, 13 164.425, 13 162.500 L 13 159 18 159 L 23 159 23.102 162.750 C 23.203 166.435, 23.217 166.448, 23.915 163.500 C 24.780 159.843, 24.632 151.298, 23.687 150.353 C 23.309 149.976, 23 151.317, 23 153.333 L 23 157 18 157 C 13.133 157, 13 156.922, 13 154.059 C 13 152.441, 12.550 150.840, 12 150.500 C 11.365 150.108, 11 152.823, 11 157.941 M 37.475 157.625 C 33.676 165.961, 33.663 166.002, 34.750 165.996 C 35.163 165.994, 36.815 162.865, 38.421 159.043 C 40.028 155.221, 41.671 152.297, 42.073 152.545 C 42.474 152.793, 43.274 154.347, 43.850 155.998 C 44.827 158.801, 44.734 159, 42.448 159 C 41.102 159, 40 159.450, 40 160 C 40 160.550, 41.360 161, 43.021 161 C 45.274 161, 46.333 161.636, 47.182 163.500 C 47.808 164.875, 48.666 166, 49.089 166 C 49.511 166, 48.237 162.400, 46.258 158 C 44.280 153.600, 42.276 150, 41.805 150 C 41.334 150, 39.386 153.431, 37.475 157.625 M 53.039 152.189 C 50.405 155.015, 50.420 159.993, 53.073 163.365 C 54.761 165.512, 55.976 166, 59.632 166 C 62.099 166, 63.886 165.625, 63.603 165.167 C 63.320 164.708, 61.814 164.520, 60.256 164.749 C 56.813 165.254, 53.349 162.616, 52.447 158.800 C 51.539 154.962, 55.908 150.613, 60.059 151.222 C 61.677 151.459, 63 151.282, 63 150.827 C 63 150.372, 61.218 150, 59.039 150 C 56.252 150, 54.474 150.649, 53.039 152.189 M 68.336 152.573 C 66.192 154.718, 65.860 155.760, 66.351 158.823 C 66.674 160.846, 67.903 163.287, 69.080 164.250 C 71.242 166.017, 79 166.739, 79 165.173 C 79 164.718, 77.649 164.545, 75.998 164.787 C 71.211 165.490, 68 162.765, 68 158 C 68 153.235, 71.211 150.510, 75.998 151.213 C 77.649 151.455, 79 151.282, 79 150.827 C 79 150.372, 77.180 150, 74.955 150 C 71.942 150, 70.252 150.657, 68.336 152.573 M 82 158 L 82 166 87.750 165.820 C 93.436 165.641, 93.448 165.635, 88.750 165.265 C 84.243 164.910, 84 164.740, 84 161.945 C 84 159.176, 84.239 159, 88 159 C 90.200 159, 92 158.550, 92 158 C 92 157.450, 90.200 157, 88 157 C 84.239 157, 84 156.824, 84 154.055 C 84 151.260, 84.243 151.090, 88.750 150.735 C 93.448 150.365, 93.436 150.359, 87.750 150.180 L 82 150 82 158 M 96.200 151.200 C 94.363 153.037, 94.772 156.808, 96.934 157.965 C 97.998 158.534, 100.262 159, 101.966 159 C 103.917 159, 105.296 159.608, 105.694 160.645 C 106.631 163.087, 103.148 165.244, 99.250 164.634 C 97.463 164.355, 96 164.547, 96 165.063 C 96 166.434, 104.391 166.209, 105.800 164.800 C 106.460 164.140, 107 162.655, 107 161.500 C 107 158.395, 105.069 157, 100.769 157 C 98.136 157, 96.740 156.486, 96.306 155.355 C 95.402 153, 98.849 150.796, 102.750 151.234 C 104.537 151.434, 106 151.239, 106 150.799 C 106 149.528, 97.526 149.874, 96.200 151.200 M 109.571 151.571 C 106.108 155.035, 109.044 159, 115.071 159 C 118.587 159, 119 159.261, 119 161.481 C 119 164.317, 115.726 165.650, 111.416 164.568 C 109.741 164.148, 109.058 164.285, 109.475 164.960 C 110.475 166.578, 117.663 166.194, 119.429 164.429 C 123.154 160.703, 120.232 157, 113.566 157 C 110.436 157, 110 156.696, 110 154.519 C 110 151.703, 113.267 150.348, 117.500 151.411 C 118.942 151.772, 120 151.607, 120 151.019 C 120 149.355, 111.329 149.814, 109.571 151.571 M 125.073 152.635 C 120.592 158.330, 124.035 166, 131.073 166 C 136.329 166, 139 163.304, 139 158 C 139 152.696, 136.329 150, 131.073 150 C 128.021 150, 126.683 150.587, 125.073 152.635 M 142.349 158 C 142.349 162.675, 142.522 164.588, 142.732 162.250 C 142.943 159.912, 142.943 156.088, 142.732 153.750 C 142.522 151.412, 142.349 153.325, 142.349 158 M 146 158 C 146 162.667, 146.417 166, 147 166 C 147.578 166, 148 162.833, 148 158.500 L 148 151 150.878 151 C 152.460 151, 154.301 151.658, 154.969 152.463 C 155.956 153.652, 155.682 154.390, 153.501 156.411 L 150.819 158.897 153.528 162.448 C 155.018 164.402, 156.657 166, 157.170 166 C 157.682 166, 156.884 164.404, 155.396 162.453 L 152.690 158.905 154.845 157.396 C 157.359 155.635, 157.709 151.486, 155.418 150.607 C 154.548 150.273, 152.073 150, 149.918 150 L 146 150 146 158 M 159.805 151.750 C 159.569 152.713, 159.407 156.200, 159.444 159.500 L 159.512 165.500 165.006 165.600 C 170.135 165.694, 170.184 165.673, 165.750 165.295 C 161.250 164.912, 161 164.735, 161 161.945 C 161 159.183, 161.245 159, 164.941 159 C 167.109 159, 169.160 158.550, 169.500 158 C 169.878 157.389, 168.344 157, 165.559 157 C 161.179 157, 161 156.884, 161 154.055 C 161 151.260, 161.243 151.090, 165.750 150.735 L 170.500 150.360 165.367 150.180 C 161.216 150.034, 160.151 150.335, 159.805 151.750 M 127.170 152.594 C 123.860 154.912, 124.411 161.828, 128.069 163.872 C 133.770 167.057, 139.327 161.620, 136.898 155.233 C 135.178 150.709, 131.345 149.669, 127.170 152.594 M 27.500 160 C 27.149 160.567, 27.990 161, 29.441 161 C 30.848 161, 32 160.550, 32 160 C 32 159.450, 31.127 159, 30.059 159 C 28.991 159, 27.840 159.450, 27.500 160" stroke="none" fill="#4d2a14" fill-rule="evenodd"/>
           </svg>
-        </button>
-
-      <!-- legale-->     
-  <div class="flex items-center gap-5 mx-auto">
-    <button
-      @click="isOpen = !isOpen"
-      class="flex items-center gap-1 font-Ledger text-[#4D2A14] text-sm">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="12"
-        height="24"
-        viewBox="0 0 12 24"
-        :class="{'rotate-90': isOpen, 'rotate-0': !isOpen, 'transition-transform': true}"
-      >
-        <defs>
-          <path
-            id="weuiArrowOutlined0"
-            fill="#102820"
-            d="m7.588 12.43l-1.061 1.06L.748 7.713a.996.996 0 0 1 0-1.413L6.527.52l1.06 1.06l-5.424 5.425z"
-          />
-        </defs>
-        <use
-          fill-rule="evenodd"
-          href="#weuiArrowOutlined0"
-          transform="rotate(-180 5.02 9.505)"
-        />
-      </svg>
-      Mentions légales
-    </button>
-
-    <div
-      v-if="isOpen"
-      class="absolute mt-2 bg-white border border-[#CABA9C] shadow-md rounded px-4 py-2 z-50 space-y-1 w-56"
-    >
-      <a href="/mentions" class="block text-[#4D2D18] hover:underline">Mentions légales</a>
-      <a href="/confidentialite" class="block text-[#4D2D18] hover:underline">Politique de confidentialité</a>
-      <a href="https://support.google.com/chrome/answer/95647?hl=fr&co=GENIE.Platform%3DDesktop" class="block text-[#4D2D18] hover:underline">Gestion des cookies</a>
-    </div>
-  </div>
-    <!-- A propos -->
-  <div class="flex items-center gap-5 mx-auto">
-  <button
-      @click="isOpen1 = !isOpen1"
-      class="flex items-center gap-1 font-Ledger text-[#4D2A14] text-sm" >
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="12"
-                height="24"
-                viewBox="0 0 12 24"
-                :class="{'rotate-90': isOpen1, 'rotate-0': !isOpen1, 'transition-transform': true}"
-            >
-                    <defs>
-                    <path
-                        id="weuiArrowOutlined0"
-                        fill="#102820"
-                        d="m7.588 12.43l-1.061 1.06L.748 7.713a.996.996 0 0 1 0-1.413L6.527.52l1.06 1.06l-5.424 5.425z"
-                    />
-                </defs>
-                <use
-                    fill-rule="evenodd"
-                    href="#weuiArrowOutlined0"
-                    transform="rotate(-180 5.02 9.505)"
-                />
-            </svg>
-        A propos
-    </button>
-
-    <div
-      v-if="isOpen1"
-      class="absolute mt-2 bg-white border border-[#CABA9C] shadow-md rounded px-4 py-2 z-50 space-y-1 w-56"
-    >
-      <a href="/mentions" class="block text-[#4D2D18] hover:underline">Nos</a>
-      <a href="/confidentialite" class="block text-[#4D2D18] hover:underline">Produits plus achetés</a>
-      <a href="" class="block text-[#4D2D18] hover:underline"> autre </a>
-    </div>
-  </div>
-
-   </div>    
-
-     <div class="mb-3 flex gap-5 items-center">
+            H_ACCESSOIRES
+          </h2></a>
+        </div>
   <!-- Réseaux sociaux -->
-    <a href="https://www.instagram.com/h_accessoires" title="Instagram" target="_blank" rel="noopener noreferrer"
+       <div class="mb-3 flex gap-5 items-center">
+       <a href="https://www.instagram.com/h_accessoires" title="Instagram" target="_blank" rel="noopener noreferrer"
         class="text-lg flex items-center gap-1 font-Ledger hover:opacity-75 transition">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
         <path fill="#102820" fill-rule="evenodd"
             d="M7.5.75A6.75 6.75 0 0 0 .75 7.5v9a6.75 6.75 0 0 0 6.75 6.75h9a6.75 6.75 0 0 0 6.75-6.75v-9A6.75 6.75 0 0 0 16.5.75zM2.25 7.5c0-2.9 2.35-5.25 5.25-5.25h9c2.9 0 5.25 2.35 5.25 5.25v9c0 2.9-2.35 5.25-5.25 5.25h-9a5.25 5.25 0 0 1-5.25-5.25zM19.5 6.25a1.25 1.25 0 1 1-2.5 0a1.25 1.25 0 0 1 2.5 0M12 7.75a4.25 4.25 0 1 0 0 8.5a4.25 4.25 0 0 0 0-8.5M6.25 12a5.75 5.75 0 1 1 11.5 0a5.75 5.75 0 0 1-11.5 0"
             clip-rule="evenodd" stroke-width="0.5" stroke="#102820" />
         </svg>
-    </a>
+       </a>
 
   
-    <a href="https://www.facebook.com/h_accessoires" title="Facebook" target="_blank" rel="noopener noreferrer"
-        class="text-lg flex items-center gap-1 font-Ledger hover:opacity-75 transition">
-        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 14 14">
-            <path fill="none" stroke="#102820" stroke-linecap="round" stroke-linejoin="round" d="M.5 12.5v-11a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1h-3V8.76h.71a.61.61 0 0 0 .61-.61v-.77a.61.61 0 0 0-.61-.61h-.67v-.94c0-.84.38-.84.76-.84h.49a.55.55 0 0 0 .43-.18a.58.58 0 0 0 .18-.43v-.74a.62.62 0 0 0-.6-.64H9.65a2.32 2.32 0 0 0-2.39 2.6v1.17h-.64a.61.61 0 0 0-.62.61v.77a.61.61 0 0 0 .62.61h.64v4.74H1.5a1 1 0 0 1-1-1" stroke-width="1" />
-        </svg>
-    </a>
-
-    <a href="https://www.twitter.com/h_accessoires" title="Twitter" target="_blank" rel="noopener noreferrer"
-        class="text-lg flex items-center gap-1 font-Ledger hover:opacity-75 transition">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-        <path fill="none" stroke="#102820" stroke-linecap="round" stroke-linejoin="round" d="M17.27 22.464L1.5 1.536h5.23L22.5 22.464zm4.488-20.928l-8.313 8.915M2.242 22.464l8.307-8.908" stroke-width="1" />
-        </svg>
-    </a>
-    <a href="https://whatsapp.com/0634901081" title="WhatsApp" target="_blank" rel="noopener noreferrer"
-        class="text-lg flex items-center gap-1 font-Ledger hover:opacity-75 transition">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-            <g fill="none" stroke="#102820" stroke-linejoin="round" stroke-width="1">
-                <path d="M17 16.5c-1.74 1.74-5.749.257-7.753-1.747S5.76 8.74 7.5 7c.504-.504 1.198-.564 1.622-.544c.245.011.457.155.6.355l.952 1.334a1 1 0 0 1-.107 1.288l-.901.901c.166.5.7 1.7 1.5 2.5s2 1.334 2.5 1.5l.901-.9a1 1 0 0 1 1.288-.108l1.334.952c.2.143.344.355.355.6c.02.424-.04 1.118-.544 1.622Z" />
-                <path d="M12 22.5c5.799 0 10.5-4.701 10.5-10.5S17.799 1.5 12 1.5S1.5 6.201 1.5 12c0 1.912.511 3.706 1.405 5.25l-.88 4.725l4.725-.88A10.45 10.45 0 0 0 12 22.5Z" />
-            </g>
+        <a href="https://www.facebook.com/h_accessoires" title="Facebook" target="_blank" rel="noopener noreferrer"
+            class="text-lg flex items-center gap-1 font-Ledger hover:opacity-75 transition">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 14 14">
+                <path fill="none" stroke="#102820" stroke-linecap="round" stroke-linejoin="round" d="M.5 12.5v-11a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1h-3V8.76h.71a.61.61 0 0 0 .61-.61v-.77a.61.61 0 0 0-.61-.61h-.67v-.94c0-.84.38-.84.76-.84h.49a.55.55 0 0 0 .43-.18a.58.58 0 0 0 .18-.43v-.74a.62.62 0 0 0-.6-.64H9.65a2.32 2.32 0 0 0-2.39 2.6v1.17h-.64a.61.61 0 0 0-.62.61v.77a.61.61 0 0 0 .62.61h.64v4.74H1.5a1 1 0 0 1-1-1" stroke-width="1" />
             </svg>
-    </a>
-</div>
+        </a>
 
-  <div class="flex justify-center gap-6 flex-wrap">
+      <a href="https://www.twitter.com/h_accessoires" title="Twitter" target="_blank" rel="noopener noreferrer"
+          class="text-lg flex items-center gap-1 font-Ledger hover:opacity-75 transition">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+          <path fill="none" stroke="#102820" stroke-linecap="round" stroke-linejoin="round" d="M17.27 22.464L1.5 1.536h5.23L22.5 22.464zm4.488-20.928l-8.313 8.915M2.242 22.464l8.307-8.908" stroke-width="1" />
+          </svg>
+      </a>
+      <a href="https://whatsapp.com/0634901081" title="WhatsApp" target="_blank" rel="noopener noreferrer"
+          class="text-lg flex items-center gap-1 font-Ledger hover:opacity-75 transition">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+              <g fill="none" stroke="#102820" stroke-linejoin="round" stroke-width="1">
+                  <path d="M17 16.5c-1.74 1.74-5.749.257-7.753-1.747S5.76 8.74 7.5 7c.504-.504 1.198-.564 1.622-.544c.245.011.457.155.6.355l.952 1.334a1 1 0 0 1-.107 1.288l-.901.901c.166.5.7 1.7 1.5 2.5s2 1.334 2.5 1.5l.901-.9a1 1 0 0 1 1.288-.108l1.334.952c.2.143.344.355.355.6c.02.424-.04 1.118-.544 1.622Z" />
+                  <path d="M12 22.5c5.799 0 10.5-4.701 10.5-10.5S17.799 1.5 12 1.5S1.5 6.201 1.5 12c0 1.912.511 3.706 1.405 5.25l-.88 4.725l4.725-.88A10.45 10.45 0 0 0 12 22.5Z" />
+              </g>
+              </svg>
+      </a>
+   </div>
+        <!-- Menus -->
+        <transition name="fade-slide">
+          <div
+            v-if="isExpanded"
+            class="flex gap-16 text-sm"
+          >
+            <!-- Liens utiles -->
+            <div>
+              <h3 class="font-semibold text-md mb-2">➤ Liens utiles</h3>
+              <ul class="space-y-1">
+                <li><a href="/" class="hover:underline">Accueil</a></li>
+                <li><a href="/boutique" class="hover:underline">Boutique</a></li>
+                <li><a href="/contact" class="hover:underline">Contact</a></li>
+                <li><a href="/faq" class="hover:underline">FAQ</a></li>
+                <li><a href="/retour" class="hover:underline">Politique de retour</a></li>
+                <li><a href="/conditions" class="hover:underline">Conditions générales</a></li>
+              </ul>
+            </div>
+
+            <!-- À propos -->
+            <div class="max-w-xs">
+              <h3 class="font-semibold text-md mb-2">➤ À propos</h3>
+              <p class="text-[#102820]">
+                Boutique en ligne d’accessoires tendance pour toute la famille. Livraison rapide partout au Maroc.
+              </p>
+            </div>
+          </div>
+        </transition>
+      </div>
+
     
-    <span>Mentions légales</span>
-    <span>Conditions</span>
-    <span>Confidentialité</span>
-    <span>Contact</span>
-  </div>
-  <p class="mt-4 text-xs">© 2025 H_ACCESSOIRES. Tous droits réservés.</p>
-</footer>
+      <!-- Footer bas -->
+      <div class="border-t border-[#4D2D18]/30 pt-4 text-center text-xs text-[#4D2D18]">
+        © 2025 H_ACCESSOIRES. Tous droits réservés.
+      </div>
+    </div>
+  </footer>
 </template>
-<script setup>
-import { ref } from 'vue';
 
-const isOpen = ref(false);
-const isOpen1 = ref(false);
+<script>
+export default {
+  data() {
+    return {
+      isExpanded: false,
+    };
+  },
+  methods: {
+    expandFooter() {
+      this.isExpanded = true;
+    },
+    collapseFooter() {
+      this.isExpanded = false;
+    },
+  },
+};
 </script>
+
+<style scoped>
+footer {
+  transition: all 0.5s ease-in-out;
+  transform: translateY(40px);
+}
+
+.footer-expanded {
+  transform: translateY(0);
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+}
+
+.footer-collapsed {
+  transform: translateY(40px);
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+/* Animation transition */
+.fade-slide-enter-active,
+.fade-slide-leave-active {
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.fade-slide-enter-from,
+.fade-slide-leave-to {
+  opacity: 0;
+  transform: translateY(20px);
+}
+.fade-slide-enter-to,
+.fade-slide-leave-from {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>

@@ -13,13 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-       
-    Schema::table('users', function (Blueprint $table) {
-        $table->string('telephone',20)->after('email')
-              ->nullable()
-              ->comment('numéro de téléphone de l’utilisateur');
-    });
-}
+        if (!Schema::hasColumn('users', 'telephone')) {
+            Schema::table('users', function (Blueprint $table) {
+                $table->string('telephone',20)->after('email')
+                      ->nullable()
+                      ->comment('numéro de téléphone de l\'utilisateur');
+            });
+        }
+    }
         
     /**
      * Reverse the migrations.
